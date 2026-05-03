@@ -33,3 +33,51 @@ Where:
    cd $WM_PROJECT_USER_DIR/applications
    git clone [https://github.com/Suyash-Gupta1/stealthAfcFoam.git](https://github.com/Suyash-Gupta1/stealthAfcFoam.git)
    cd stealthAfcFoam
+
+Compile the custom C++ solver:
+
+Bash
+wmake
+The executable will be placed in your $FOAM_USER_APPBIN directory.
+
+⚙️ Usage & Configuration
+To use stealthAfcFoam in a case, you must define the synthetic jet parameters.
+
+Navigate to your case's constant/ directory and create a file named afcProperties:
+
+Plaintext
+/*--------------------------------*- C++ -*----------------------------------*\
+| =========                 |                                                 |
+| \\      /  F ield         | OpenFOAM: The Open Source CFD Toolbox           |
+|  \\    /   O peration     | Version:  2312                                  |
+|   \\  /    A nd           | Website:  [www.openfoam.com](https://www.openfoam.com)                      |
+|    \\/     M anipulation  |                                                 |
+\*---------------------------------------------------------------------------*/
+FoamFile
+{
+    version     2.0;
+    format      ascii;
+    class       dictionary;
+    object      afcProperties;
+}
+// * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * //
+
+// Acceleration of the jet pulse
+jetAmplitude    [0 1 -2 0 0 0 0] 50.0;
+
+// Frequency of the pulse (Hz)
+jetFrequency    [0 0 -1 0 0 0 0] 10.0;
+
+// Orientation of the jet (X, Y, Z)
+jetDirection    [0 0 0 0 0 0 0] (0 1 0); 
+Update your system/controlDict to use the new solver:
+
+Plaintext
+application     stealthAfcFoam;
+Run the case:
+
+Bash
+stealthAfcFoam
+👨‍💻 Author
+Suyash Gupta
+Mechanical Engineering | Computational Fluid Dynamics (CFD)
